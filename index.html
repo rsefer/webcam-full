@@ -19,33 +19,33 @@
 <body onload="init()">
 <video autoplay muted></video>
 <script>
-  function init() {
-    var video = document.querySelector('video');
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then(function(stream) {
-          video.srcObject = stream;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-		} else if (navigator.getUserMedia) {
-			navigator.getUserMedia(mediaConfig, function(stream) {
-				video.src = stream;
-				video.play();
-			}, errBack);
-		} else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
-			navigator.webkitGetUserMedia(mediaConfig, function(stream) {
-				video.src = window.webkitURL.createObjectURL(stream);
-				video.play();
-			}, errBack);
-		} else if (navigator.mozGetUserMedia) { // Mozilla-prefixed
-			navigator.mozGetUserMedia(mediaConfig, function(stream) {
-				video.src = window.URL.createObjectURL(stream);
-				video.play();
-			}, errBack);
-		}
-		}
+function init() {
+	var video = document.querySelector('video');
+	if (navigator.mediaDevices.getUserMedia) {
+		navigator.mediaDevices.getUserMedia({ video: true })
+			.then(function(stream) {
+				video.srcObject = stream;
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+	} else if (navigator.getUserMedia) {
+		navigator.getUserMedia(mediaConfig, function(stream) {
+			video.src = stream;
+			video.play();
+		}, errBack);
+	} else if (navigator.webkitGetUserMedia) {
+		navigator.webkitGetUserMedia(mediaConfig, function(stream) {
+			video.src = window.webkitURL.createObjectURL(stream);
+			video.play();
+		}, errBack);
+	} else if (navigator.mozGetUserMedia) {
+		navigator.mozGetUserMedia(mediaConfig, function(stream) {
+			video.src = window.URL.createObjectURL(stream);
+			video.play();
+		}, errBack);
+	}
+}
 </script>
 </body>
 </html>
