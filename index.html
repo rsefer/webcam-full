@@ -30,16 +30,17 @@ setVH();
 function errBack(error) {
 	console.error(error);
 }
+
 function init() {
 	var video = document.querySelector('video');
 	if (navigator.mediaDevices.getUserMedia) {
 		navigator.mediaDevices.getUserMedia({ video: true })
 			.then(function(stream) {
-				console.log('testing stream');
-				console.log(stream);
 				video.srcObject = stream;
 			})
-			.catch(errBack);
+			.catch(function(err) {
+				console.log('failed');
+			});
 	} else if (navigator.getUserMedia) {
 		navigator.getUserMedia(mediaConfig, function(stream) {
 			video.src = stream;
@@ -55,6 +56,8 @@ function init() {
 			video.src = window.URL.createObjectURL(stream);
 			video.play();
 		}, errBack);
+	} else {
+		console.log('Camera not loading.');
 	}
 }
 </script>
