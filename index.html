@@ -27,6 +27,8 @@ function init() {
 	if (navigator.mediaDevices.getUserMedia) {
 		navigator.mediaDevices.getUserMedia({ video: true })
 			.then(function(stream) {
+				console.log('testing stream');
+				console.log(stream);
 				video.srcObject = stream;
 			})
 			.catch(errBack);
