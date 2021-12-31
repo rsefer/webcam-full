@@ -19,6 +19,9 @@
 <body onload="init()">
 <video autoplay muted></video>
 <script>
+function errBack(error) {
+	console.error(error);
+}
 function init() {
 	var video = document.querySelector('video');
 	if (navigator.mediaDevices.getUserMedia) {
@@ -26,9 +29,7 @@ function init() {
 			.then(function(stream) {
 				video.srcObject = stream;
 			})
-			.catch(function(error) {
-				console.log(error);
-			});
+			.catch(errBack);
 	} else if (navigator.getUserMedia) {
 		navigator.getUserMedia(mediaConfig, function(stream) {
 			video.src = stream;
