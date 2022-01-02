@@ -27,49 +27,45 @@
   }
 </style>
 </head>
-<body onload="init()">
+<body>
 <video autoplay muted></video>
 <script>
+var isPlaying = false;
+var video = document.querySelector('video');
+setVH();
+
 function setVH() {
 	var vh = window.innerHeight * 0.01;
 	document.documentElement.style.setProperty('--vh', vh + 'px');
 }
 
-setVH();
-
-function errBack(error) {
-	console.error(error);
-}
-
 function init() {
-	var video = document.querySelector('video');
 	if (navigator.mediaDevices.getUserMedia) {
 		navigator.mediaDevices.getUserMedia({ video: true })
 			.then(function(stream) {
+				isPlaying = true;
 				video.srcObject = stream;
 			})
 			.catch(function(err) {
 				console.log('failed');
 			});
-	} else if (navigator.getUserMedia) {
-		navigator.getUserMedia(mediaConfig, function(stream) {
-			video.src = stream;
-			video.play();
-		}, errBack);
-	} else if (navigator.webkitGetUserMedia) {
-		navigator.webkitGetUserMedia(mediaConfig, function(stream) {
-			video.src = window.webkitURL.createObjectURL(stream);
-			video.play();
-		}, errBack);
-	} else if (navigator.mozGetUserMedia) {
-		navigator.mozGetUserMedia(mediaConfig, function(stream) {
-			video.src = window.URL.createObjectURL(stream);
-			video.play();
-		}, errBack);
 	} else {
 		console.log('Camera not loading.');
 	}
 }
+
+function togglePlayPause() {
+	if (isPlaying == false) {
+		init();
+	} else {
+		video.srcObject = null;
+		isPlaying = false;
+	}
+}
+
+window.addEventListener('resize', function() {
+	setVH();
+});
 </script>
 </body>
 </html>
