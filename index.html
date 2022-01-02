@@ -32,6 +32,7 @@
 <script>
 var isPlaying = false;
 var video = document.querySelector('video');
+var localStream;
 setVH();
 
 function setVH() {
@@ -45,6 +46,8 @@ function init() {
 			.then(function(stream) {
 				isPlaying = true;
 				video.srcObject = stream;
+				localStream = stream;
+				video.play();
 			})
 			.catch(function(err) {
 				console.log('failed');
@@ -58,6 +61,8 @@ function togglePlayPause() {
 	if (isPlaying == false) {
 		init();
 	} else {
+		video.pause();
+		localStream.getTracks()[0].stop();
 		video.srcObject = null;
 		isPlaying = false;
 	}
